@@ -9,6 +9,8 @@ int  HJrecv::decode (decode_results *results)
 {
 	results->rawbuf   = hjparams.rawbuf;
 	results->rawlen   = hjparams.rawlen;
+	results->bits = 0;
+	results->value = 0;
 
 	results->overflow = hjparams.overflow;
 
@@ -17,15 +19,15 @@ int  HJrecv::decode (decode_results *results)
 	for (int i = 1;  i < results->rawlen;  i++) {
 		int lvalue =  (results->rawbuf[i] / SYMBOL_LEN);	// number jf bits
 		while(lvalue) {
-			results->value << 1;							// only 32 bits
+			results->value <<= 1;							// only 32 bits
 			if (i & 1) {	// MARK
-				results->value | 1; 
+				results->value += 1;
 			}
 			lvalue--;
 			results->bits++;
 		}
 	}
-	if (results->bits == 32)  return true ;
+	if (results->bits > 32)  return true ;
 
 	// Throw away and start over
 	resume();
