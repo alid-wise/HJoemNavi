@@ -22,9 +22,9 @@ void setup()
   Serial.begin(9600);
   // In case the interrupt driver crashes on setup, give a clue
   // to the user what's going on.
-  Serial.println("Enabling IRin");
-  hjrecv.enableIRIn(); // Start the receiver
-  Serial.println("Enabled IRin");
+  Serial.println("Enabling HJin");
+  hjrecv.enableHJIn(); // Start the receiver
+  Serial.println("Enabled HJin");
 }
 
 void loop() {
@@ -33,17 +33,15 @@ void loop() {
 
     // А теперь кнопки
     if(results.value == dvalue) {
-      if(cnt < CNT) {
-        cnt++;
-      }
+      cnt++;
     } else {
       dvalue = result.value;
       cnt = 0;
     }
     hjrecv.resume(); // Receive the next value
   } else {
-    if(dvalue > 0 && cnt == CNT) {  // Кнопка отпущена
-      Serial.println(dvalue, HEX);
+    if(dvalue > 0 && cnt >= CNT) {  // Кнопка отпущена
+      Serial.println(dvalue, HEX);  // отправляем в HID
       dvalue = 0;
       cnt = 0;
     }
