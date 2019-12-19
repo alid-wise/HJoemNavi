@@ -35,7 +35,7 @@ void loop() {
     if(results.value == dvalue) {
       cnt++;
     } else {
-      dvalue = result.value;
+      dvalue = results.value;
       cnt = 0;
     }
     hjrecv.resume(); // Receive the next value
