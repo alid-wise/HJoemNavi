@@ -89,7 +89,7 @@ EXTERN  volatile hjparams_t  hjparams;
 #define UTOL            (1.0 + (TOLERANCE/100.))
 
 // Minimum gap between IR transmissions
-#define _GAP            50000
+#define _GAP            25000
 #define GAP_TICKS       (_GAP/USECPERTICK)
 
 #define TICKS_LOW(us)   ((int)(((us)*LTOL/USECPERTICK)))

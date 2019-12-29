@@ -153,7 +153,6 @@ ISR (TIMER_INTR_NAME)
 				hjparams.rawbuf[hjparams.rawlen++] = hjparams.timer;
 				hjparams.timer                     = 0;
 				hjparams.rcvstate                  = STATE_MARK;
-
 			} else if (hjparams.timer > GAP_TICKS) {  // Space
 					// A long Space, indicates gap between codes
 					// Flag the current code as ready for processing

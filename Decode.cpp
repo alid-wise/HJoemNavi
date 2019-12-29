@@ -27,7 +27,7 @@ int  HJrecv::decode (decode_results *results)
 			results->bits++;
 		}
 	}
-	if (results->bits > 32)  return true ;
+	if (results->bits > 32 && results->value > 0)  return true ;
 
 	// Throw away and start over
 	resume();
