@@ -32,9 +32,10 @@ while(<DATA>) {
 	$rawlen = scalar @rawbuf;
 	my $key_length;
 	map { $_ /= $USECPERTICK; $key_length += abs($_); } @rawbuf;
-#	print "key length: $key_length rawlen: $rawlen\n";
+	print "key length: $key_length rawlen: $rawlen\n";
 #	next	unless($key_length == $KEY_LENGTH);
 	my $bkey = '';
+	my $bitc = 0;
 	for(my $i=0; $i<$rawlen; $i++) {
 		my $l = abs(int($rawbuf[$i] / $SYMBOL_LENGTH));
 #		$l++	if(abs(int($rawbuf[$i] % $SYMBOL_LENGTH)) >= $SYMBOL_LENGTH_TOLERANCE);
@@ -42,11 +43,14 @@ while(<DATA>) {
 		while($l) {
 			$bkey .= $s;
 			$l--;
+			$bitc++;
 		}		
 	}
-#print "[$bkey]\n";
-#print "[".substr("0" x 32 . $bkey, -32)."]\n";
+print "[$bkey] $bitc\n";
+print "[".substr("0" x 64 . $bkey, -64)."]\n";
+printf("%X\n", hex(unpack("H32", pack("B64", substr("0" x 64 . $bkey, -64)))));
 print unpack("H32", pack("B32", substr("0" x 32 . $bkey, -32)))."\n";
+print unpack("H32", pack("B64", substr("0" x 64 . $bkey, -64)))."\n";
 }
 
 __DATA__
